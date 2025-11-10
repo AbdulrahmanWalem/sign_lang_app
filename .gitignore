@@ -1,0 +1,62 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.egg-info/
+*.manifest
+*.spec
+
+# === Virtual environments / Conda ===
+.env/
+env/
+venv/
+*.conda
+*.ipynb_checkpoints/
+
+# === Jupyter / Notebooks ===
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# === Data / Models / Outputs ===
+data/
+models/
+*.h5
+*.pt
+*.ckpt
+*.tflite
+*.onnx
+*.pb
+*.npy
+*.npz
+*.csv
+
+# === Logs / temporary files ===
+*.log
+*.tmp
+*.bak
+*.swp
+
+# === IDEs / Editors ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === OS specific ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Streamlit / other app caches ===
+.streamlit/
+
+# === Optional for large media / videos ===
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm

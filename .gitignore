@@ -15,7 +15,6 @@ __pycache__/
 env/
 venv/
 *.conda
-*.ipynb_checkpoints/
 
 # === Jupyter / Notebooks ===
 .ipynb_checkpoints/
@@ -33,6 +32,10 @@ models/
 *.npy
 *.npz
 *.csv
+
+# === Dataset ===
+archive/
+archive.zip
 
 # === Logs / temporary files ===
 *.log

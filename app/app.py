@@ -5,13 +5,14 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import threading
 
+
 class SignLanguageApp:
     def __init__(self, root):
         self.root = root
         self.root.title("AI Sign Language")
 
         self.mp_hands = mp.solutions.hands.Hands(
-            max_num_hands=1,
+            max_num_hands=2,
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5
         )
@@ -62,6 +63,7 @@ class SignLanguageApp:
                 frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 results = self.mp_hands.process(frame_rgb)
 
+                # 👇 HERE — both hands enabled (NO break)
                 if results.multi_hand_landmarks:
                     for handLms in results.multi_hand_landmarks:
                         self.mp_draw.draw_landmarks(
@@ -69,11 +71,6 @@ class SignLanguageApp:
                             handLms,
                             mp.solutions.hands.HAND_CONNECTIONS
                         )
-                        break
-
-                    self.frame_counter += 1
-                    if self.frame_counter % 10 == 0:
-                        self.predict_from_hand()
 
                 img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 img = Image.fromarray(img)
@@ -106,9 +103,7 @@ class SignLanguageApp:
             try:
                 mic = sr.Microphone()
             except Exception:
-                self.translation_label.config(
-                    text="Unable to access microphone (PyAudio not installed or no mic connected)."
-                )
+                self.translation_label.config(text="Voice input is not available.")
                 return
 
             with mic as source:
@@ -119,16 +114,14 @@ class SignLanguageApp:
             try:
                 text = r.recognize_google(audio, language="ar-SA")
                 self.translation_label.config(text=f"Voice translation:\n{text}")
-            except sr.UnknownValueError:
-                self.translation_label.config(text="Could not understand the audio, please try again.")
-            except sr.RequestError as e:
-                self.translation_label.config(text=f"Speech recognition service error: {e}")
+            except:
+                self.translation_label.config(text="Could not understand the audio.")
 
         except Exception as e:
-            self.translation_label.config(text=f"Microphone error: {e}")
+            self.translation_label.config(text=f"Voice error: {e}")
 
     def on_closing(self):
-        if self.cap and self.cap.isOpened():
+        if self.cap.isOpened():
             self.cap.release()
         self.mp_hands.close()
         self.root.destroy()
